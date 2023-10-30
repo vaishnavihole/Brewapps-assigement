@@ -86,6 +86,38 @@ app.get("/book/:id", async (req, res) => {
     })
 })
 
+// PUT / Book
+app.put("/book/:id", async (req, res) => {
+    const { id } = req.params;
+    const { title,
+        summary,
+        author,
+        ISBN,
+        price,
+        image } = req.body
+
+    await Book.updateOne(
+        { _id: id },
+        {
+            $set: {
+                title,
+                summary,
+                author,
+                ISBN,
+                price,
+                image
+            },
+        }
+    ); 
+    const updatedBook = await Book.findById(id);
+
+    res.json({
+        success: true,
+        data: updatedBook,
+        message: "Book updated Successfully",
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`The server is Running on Port ${PORT} 🚀`);
 });
