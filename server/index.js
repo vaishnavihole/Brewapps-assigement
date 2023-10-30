@@ -73,7 +73,18 @@ app.post("/book", async (req, res) => {
     }
 });
 
+// GET/By id
+app.get("/book/:id", async (req, res) => {
+    const { id } = req.params;
 
+    const book = await Book.findById(id);
+
+    res.json({
+        success: true,
+        data: book,
+        message: "Book featched Successfully"
+    })
+})
 
 app.listen(PORT, () => {
     console.log(`The server is Running on Port ${PORT} 🚀`);
