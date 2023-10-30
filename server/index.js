@@ -118,6 +118,18 @@ app.put("/book/:id", async (req, res) => {
     });
 });
 
+// DELETE / Book
+app.delete("/book/:id", async (req, res) => {
+    const {id } = req.params;
+
+    await Book.deleteOne({_id: id});
+
+    res.json({
+      success: true,
+      message: "Book deleted successfully"
+    })
+})
+
 app.listen(PORT, () => {
     console.log(`The server is Running on Port ${PORT} 🚀`);
 });
