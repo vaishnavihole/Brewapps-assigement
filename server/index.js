@@ -36,6 +36,44 @@ app.get("/books", async (req, res) => {
     })
 })
 
+//  POST /book
+app.post("/book", async (req, res) => {
+    const {
+        title,
+        summary,
+        author,
+        ISBN,
+        price,
+        image
+    } = req.body
+
+    const book = new Book({
+        title,
+        summary,
+        author,
+        ISBN,
+        price,
+        image
+    })
+
+    try {
+
+        const savedBook = await book.save();
+
+        res.json({
+            success: true,
+            data: savedBook,
+            message: "Book saved successfully"
+        });
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err.message
+        })
+    }
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`The server is Running on Port ${PORT} 🚀`);
